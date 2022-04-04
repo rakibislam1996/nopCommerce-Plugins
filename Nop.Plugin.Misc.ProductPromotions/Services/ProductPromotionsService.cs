@@ -33,15 +33,15 @@ namespace Nop.Plugin.Misc.ProductPromotions.Services
 
         #region Methods
 
-        public ProductPromotionsListModel GetProductPromotions(Customer customer,int productId)
+        public ProductPromotionsListModel GetProductPromotions(Customer customer, int productId)
         {
             if (productId==0)
                 return null;
             var product = _productService.GetProductById(productId);
 
             var discountIds = (from rep in _dpmRepository.Table
-                           where rep.EntityId == productId
-                           select rep.DiscountId).ToList();
+                               where rep.EntityId == productId
+                               select rep.DiscountId).ToList();
 
             if (!discountIds.Any())
                 return null;
@@ -52,31 +52,31 @@ namespace Nop.Plugin.Misc.ProductPromotions.Services
             {
                 var discount = _discountService.GetDiscountById(discountId);
 
-                var result = _discountService.ValidateDiscount(discount , customer);
+                var result = _discountService.ValidateDiscount(discount, customer);
 
                 if (!result.IsValid)
-                    return null;
+                    continue;
 
                 var model = new ProductPromotionsModel();
-                
+
                 model.Name = discount.Name;
                 model.UsePercentage = discount.UsePercentage;
                 model.DiscountPercentage = discount.DiscountPercentage;
                 model.DiscountAmount = discount.DiscountAmount;
-                
+
                 if (discount.UsePercentage)
                     model.DiscountAmount = (model.DiscountPercentage/100) * product.Price;
-                    
+
                 model.RequiresCouponCode = discount.RequiresCouponCode;
                 model.CouponCode = discount.CouponCode;
-                model.AdminComment = discount.AdminComment;
-                model.MaximumDiscountAmount = discount.MaximumDiscountAmount;
-                model.MaximumDiscountedQuantity = discount.MaximumDiscountedQuantity;
-                
-                promotions.Promotions.Add(model);
 
+                promotions.Promotions.Add(model);
             }
-            return promotions;
+
+            if (promotions.Promotions.Any())
+                return promotions;
+            else
+                return null;
         }
 
         #endregion

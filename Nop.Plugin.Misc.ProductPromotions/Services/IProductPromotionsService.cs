@@ -5,7 +5,9 @@ namespace Nop.Plugin.Misc.ProductPromotions.Services
 {
     public interface IProductPromotionsService
     {
-        ProductPromotionsListModel GetProductPromotions(Customer customer,int productId);
-        
+        #region Methods
+        ProductPromotionsListModel GetProductPromotions(Customer customer, int productId);
+
+        #endregion
     }
 }

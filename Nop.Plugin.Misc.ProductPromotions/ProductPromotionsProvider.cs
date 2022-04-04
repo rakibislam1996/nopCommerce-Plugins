@@ -19,39 +19,40 @@ namespace Nop.Plugin.Misc.ProductPromotions
         #region Fields
 
         private readonly ILocalizationService _localizationService;
-        private readonly IWebHelper _webHelper;
-        private readonly ISettingService _settingService;
-        private readonly IProductService _productService;
-        private readonly IDiscountService _discountService;
 
         #endregion
 
         #region Ctor
-        public ProductPromotionsProvider(ILocalizationService localizationService,
-            IWebHelper webHelper,
-            ISettingService settingService,
-            IProductService productService,
-            IDiscountService discountService)
+
+        public ProductPromotionsProvider(ILocalizationService localizationService)
         {
             _localizationService = localizationService;
-            _webHelper = webHelper;
-            _settingService = settingService;
-            _productService = productService;
-            _discountService = discountService;
         }
+
         #endregion
 
         #region Methods
 
         public override void Install()
         {
+            _localizationService.AddPluginLocaleResource(new Dictionary<string, string>
+            {
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.Percentage"] = "Discount Percentage",
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.Amount"] = "Discount Amount",
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.Coupon.Code"] = "Coupon Code",
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.Coupon.NotRequired"] = "Not Required",
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.NotApplicable"] = "No promotion is applicable",
+                ["Nop.Plugins.Misc.ProductPromotions.Product.Id.Invalid"] = "This is an invalid product id",
+                ["Nop.Plugins.Misc.ProductPromotions.Promotions.List"] = "Available Promotions",
+                ["Nop.Plugins.Misc.ProductPromotions.Discount.Name"] = "Promotion Name",
+            });
+
             base.Install();
         }
         public override void Uninstall()
         {
             base.Uninstall();
         }
-       
         public IList<string> GetWidgetZones()
         {
             return new List<string> { PublicWidgetZones.ProductDetailsAddInfo };
@@ -60,9 +61,12 @@ namespace Nop.Plugin.Misc.ProductPromotions
         {
             return "ProductPromotions";
         }
+
+        #endregion
+
+        #region Properties
+
         public bool HideInWidgetList => false;
-
-
 
         #endregion
     }

@@ -12,7 +12,7 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek
         public const string SystemName = "DiscountRequirement.DaysOfWeek";
 
         /// <summary>
-        /// The key of the settings to save restricted customer roles
+        /// The key of the settings to save restricted weekdays
         /// </summary>
         public const string SettingsKey = "DiscountRequirement.DaysOfWeek-{0}";
 

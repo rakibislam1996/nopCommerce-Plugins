@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Discount requirements",
+  "FriendlyName": "Discount rules based on day(s) of week",
+  "SystemName": "DiscountRequirement.DaysOfWeek",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "nopCommerce team",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.DiscountRules.DaysOfWeek.dll",
+  "Description": "This plugin allows to configure discounts on particular day(s) of week"
+}

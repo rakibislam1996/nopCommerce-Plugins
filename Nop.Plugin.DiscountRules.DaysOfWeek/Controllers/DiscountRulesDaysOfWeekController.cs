@@ -62,7 +62,7 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek.Controllers
             if (discountRequirementId.HasValue && _discountService.GetDiscountRequirementById(discountRequirementId.Value) is null)
                 return Content("Failed to load requirement.");
 
-            //try to get previously saved restricted customer role identifier
+            //try to get previously saved restricted weekdays
             var restrictedWeekdayIds = _settingService.GetSettingByKey<string>(string.Format(DiscountRequirementDefaults.SettingsKey, discountRequirementId ?? 0));
 
             var model = new RequirementModel
@@ -72,7 +72,7 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek.Controllers
                 SelectedWeekdaysId = restrictedWeekdayIds!=null ? restrictedWeekdayIds.Split(',').Select(x => int.Parse(x)).ToList() : null
             };
 
-            //set available customer roles
+            //set available weekdays
             model.AvailableWeekdays = new List<SelectListItem>()
             {
                 new SelectListItem
@@ -154,9 +154,7 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek.Controllers
                 }
                 var weekdaysId = string.Join(",", model.SelectedWeekdaysId);  
 
-                //var weekdaysId =  model.SelectedWeekdaysId.ToArray();
-
-                //save restricted customer role identifier
+                //save restricted weekdays
                 _settingService.SetSetting(string.Format(DiscountRequirementDefaults.SettingsKey, discountRequirement.Id), weekdaysId);
 
                 return Ok(new { NewRequirementId = discountRequirement.Id });
@@ -173,18 +171,6 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek.Controllers
         {
             return ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
         }
-
-        //private IList<int> ParseSeparatedNumbers(string separated, char separator = ',')
-        //{
-        //    if (string.IsNullOrEmpty(separated))
-        //        return new List<int>();
-
-        //    return separated.Split(separator).Select(x =>
-        //    {
-        //        int.TryParse(x, out int result);
-        //        return result;
-        //    }).ToList();
-        //}
 
         #endregion
     }

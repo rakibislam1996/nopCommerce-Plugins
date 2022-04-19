@@ -6,20 +6,24 @@ namespace Nop.Plugin.DiscountRules.DaysOfWeek.Models
 {
     public class RequirementModel
     {
+        #region Ctor
+        
         public RequirementModel()
         {
-            AvailableWeekdays = new List<SelectListItem>();
             SelectedWeekdaysId = new List<int>();
+            AvailableWeekdays = new List<SelectListItem>();
         }
+
+        #endregion
+
+        #region Properties
 
         [NopResourceDisplayName("Plugins.DiscountRules.DaysOfWeek.Fields.Weekdays.Select")]
         public IList<int> SelectedWeekdaysId { get; set; }
-		
+        public IList<SelectListItem> AvailableWeekdays { get; set; }
         public int DiscountId { get; set; }
-
         public int RequirementId { get; set; }
 
-        public IList<SelectListItem> AvailableWeekdays { get; set; }
-		
+        #endregion
     }
 }
